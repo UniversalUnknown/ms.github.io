@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Advanced Anonymous Chat</title>
+        <style>
+            :root {
+                --bg-light: #f9f9f9;
+                --bg-dark: #1e1e1e;
+                --text-light: #000;
+                --text-dark: #fff;
+                --user-msg: #e0f7fa;
+                --system-msg: #eeeeee;
+            }
+
+            body {
+                margin: 0;
+                font-family: sans-serif;
+                background: var(--bg-light);
+                color: var(--text-light);
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+                transition:
+                    background 0.3s,
+                    color 0.3s;
+            }
+
+            header {
+                background: transparent;
+                color: #2c3e50;
+                padding: 20px 0 10px;
+                text-align: center;
+                border-bottom: 1px solid #ddd;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+                font-weight: 500;
+                margin: 0;
+            }
+
+            #controls {
+                display: flex;
+                gap: 10px;
+                padding: 10px;
+                background: transparent;
+                flex-wrap: wrap;
+                justify-content: center;
+                border-bottom: 1px solid #ddd;
+            }
+
+            #controls input,
+            #controls button {
+                padding: 6px 10px;
+                border: 1px solid #ccc;
+                background: transparent;
+                font-size: 0.9em;
+            }
+
+            #chat-box {
+                flex: 1;
+                padding: 15px;
+                overflow-y: auto;
+                background: transparent;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .message {
+                margin: 5px 0;
+                padding: 8px 12px;
+                max-width: 70%;
+                font-size: 0.95em;
+            }
+
+            .user {
+                background: var(--user-msg);
+                align-self: flex-end;
+            }
+
+            .system {
+                background: var(--system-msg);
+                align-self: flex-start;
+            }
+
+            #input-area {
+                display: flex;
+                padding: 10px;
+                border-top: 1px solid #ddd;
+            }
+
+            #chat-input {
+                flex: 1;
+                padding: 8px;
+                border: 1px solid #ccc;
+                font-size: 1em;
+            }
+
+            #send-btn {
+                margin-left: 10px;
+                padding: 8px 16px;
+                background: #3498db;
+                color: white;
+                border: none;
+                font-size: 1em;
+            }
+
+            .dark-mode {
+                background: var(--bg-dark);
+                color: var(--text-dark);
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                font-weight: 400;
+            }
+
+            .dark-mode #chat-box,
+            .dark-mode #input-area,
+            .dark-mode #controls {
+                background: #2a2a2a;
+                border-color: #444;
+            }
+
+            .dark-mode .user {
+                background: #3b8ea5;
+                color: #fff;
+            }
+
+            .dark-mode .system {
+                background: #444;
+                color: #eee;
+            }
+
+            .dark-mode input,
+            .dark-mode button {
+                background: #333;
+                color: #eee;
+                border: 1px solid #555;
+            }
+
+            .dark-mode #chat-input {
+                border-radius: 0;
+            }
+
+            .dark-mode #send-btn {
+                background: #3498db;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Anonymous Chat</h1>
+        </header>
+
+        <div id="controls">
+            <input
+                type="text"
+                id="search-input"
+                placeholder="Search messages..."
+            />
+            <input type="date" id="date-filter" />
+            <button onclick="applyFilters()">Filter</button>
+            <button onclick="clearChat()">Clear Chat</button>
+            <button onclick="exportChat()">Export Chat</button>
+            <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+        </div>
+
+        <div id="chat-box"></div>
+
+        <div id="input-area">
+            <input
+                type="text"
+                id="chat-input"
+                placeholder="Type your message..."
+            />
+            <button id="send-btn" onclick="sendMessage()">Send</button>
+        </div>
+
+        <script>
+            let db;
+            let darkMode = false;
+
+            const request = indexedDB.open("ChatDB", 1);
+
+            request.onupgradeneeded = function (event) {
+                db = event.target.result;
+                const store = db.createObjectStore("messages", {
+                    keyPath: "id",
+                    autoIncrement: true,
+                });
+                store.createIndex("sender", "sender", { unique: false });
+                store.createIndex("timestamp", "timestamp", { unique: false });
+            };
+
+            request.onsuccess = function (event) {
+                db = event.target.result;
+                loadMessages();
+            };
+
+            request.onerror = function (event) {
+                console.error("DB error:", event.target.errorCode);
+                alert("Failed to load chat.");
+            };
+
+            function saveMessage(text, sender) {
+                const tx = db.transaction("messages", "readwrite");
+                const store = tx.objectStore("messages");
+                store.add({
+                    text,
+                    sender,
+                    timestamp: new Date().toISOString(),
+                });
+            }
+
+            function loadMessages(filter = {}) {
+                const chatBox = document.getElementById("chat-box");
+                chatBox.innerHTML = "";
+                const tx = db.transaction("messages", "readonly");
+                const store = tx.objectStore("messages");
+                const request = store.openCursor();
+
+                request.onsuccess = function (event) {
+                    const cursor = event.target.result;
+                    if (cursor) {
+                        const { text, sender, timestamp } = cursor.value;
+                        const matchKeyword =
+                            !filter.keyword ||
+                            text
+                                .toLowerCase()
+                                .includes(filter.keyword.toLowerCase());
+                        const matchDate =
+                            !filter.date || timestamp.startsWith(filter.date);
+                        if (matchKeyword && matchDate) {
+                            displayMessage(text, sender);
+                        }
+                        cursor.continue();
+                    }
+                };
+            }
+
+            function sendMessage() {
+                const input = document.getElementById("chat-input");
+                const message = input.value.trim();
+                if (!message) return;
+
+                displayMessage(message, "user");
+                saveMessage(message, "user");
+
+                setTimeout(() => {
+                    const reply = generateReply(message);
+                    displayMessage(reply, "system");
+                    saveMessage(reply, "system");
+                }, 500);
+
+                input.value = "";
+                input.focus();
+            }
+
+            function displayMessage(text, sender) {
+                const chatBox = document.getElementById("chat-box");
+                const msg = document.createElement("div");
+                msg.className = `message ${sender}`;
+                msg.textContent = text;
+                chatBox.appendChild(msg);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+
+            function generateReply(msg) {
+                const responses = [
+                    "That's interesting!",
+                    "Tell me more.",
+                    "I see.",
+                    "Hmm, okay!",
+                    "Let's keep chatting!",
+                ];
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+
+            function clearChat() {
+                const tx = db.transaction("messages", "readwrite");
+                const store = tx.objectStore("messages");
+                store.clear();
+                document.getElementById("chat-box").innerHTML = "";
+            }
+
+            function exportChat() {
+                const tx = db.transaction("messages", "readonly");
+                const store = tx.objectStore("messages");
+                const request = store.getAll();
+
+                request.onsuccess = function () {
+                    const messages = request.result;
+                    const text = messages
+                        .map((m) => `[${m.sender}] ${m.text}`)
+                        .join("\n");
+                    const blob = new Blob([text], { type: "text/plain" });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = "chat_history.txt";
+                    a.click();
+                    URL.revokeObjectURL(url);
+                };
+            }
+
+            function applyFilters() {
+                const keyword = document
+                    .getElementById("search-input")
+                    .value.trim();
+                const date = document.getElementById("date-filter").value;
+                loadMessages({ keyword, date });
+            }
+
+            function toggleDarkMode() {
+                darkMode = !darkMode;
+                document.body.classList.toggle("dark-mode", darkMode);
+            }
+        </script>
+    </body>
+</html>
