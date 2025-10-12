@@ -219,14 +219,11 @@
 
         <nav class="navbar" role="navigation" aria-label="Main navigation">
             <a class="nav-btn" href="../index.html" title="Home">Home</a>
-            <a class="nav-btn" href="../char/char.html" title="Chat Place"
-                >Chat</a
-            >
             <a
                 class="nav-btn"
                 href="../posts/posts.html"
                 title="My Engineering Posts"
-                >Chat</a
+                >Post</a
             >
         </nav>
 
@@ -338,13 +335,18 @@
                     </article>
 
                     <!-- card 6 -->
-                    <article class="card" onclick="toggleCard(this)">
-                        <div class="image">
-                            <img
-                                src="shark wallpaper 4K pc.jpeg"
-                                alt="Random Pinterest moments"
-                            />
+                        <div class="meta">
+                            <div class="title">Random Pinterest moments</div>
+                            <div class="controls">
+                                <button
+                                    class="btn-download"
+                                    onclick="downloadImage(event, 'shark wallpaper 4K pc.jpeg')"
+                                >
+                                    Download
+                                </button>
+                            </div>
                         </div>
+                    </article>
 
                         <!-- card 7 -->
                         <article class="card" onclick="toggleCard(this)">
@@ -363,19 +365,6 @@
                                 </div>
                             </div>
                         </article>
-
-                        <div class="meta">
-                            <div class="title">Random Pinterest moments</div>
-                            <div class="controls">
-                                <button
-                                    class="btn-download"
-                                    onclick="downloadImage(event, 'shark wallpaper 4K pc.jpeg')"
-                                >
-                                    Download
-                                </button>
-                            </div>
-                        </div>
-                    </article>
                 </section>
             </div>
         </main>
