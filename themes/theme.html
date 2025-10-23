@@ -4,6 +4,13 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>Theme Page – Wallpapers</title>
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-ancestors 'none';"
+        />
+        <meta http-equiv="X-Frame-Options" content="DENY" />
+        <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
         <style>
             :root {
                 --bg: #ffffff;
@@ -223,7 +230,11 @@
                 class="nav-btn"
                 href="../posts/posts.html"
                 title="My Engineering Posts"
+<<<<<<< HEAD
                 >Post</a
+=======
+                >Posts</a
+>>>>>>> d3d78d6 (Updating web-trial(pls dont poke wound))
             >
         </nav>
 
@@ -241,7 +252,7 @@
                             />
                         </div>
                         <div class="meta">
-                            <div class="title">Random Twitter</div>
+                            <div class="title">Random ToG Twitter</div>
                             <div class="controls">
                                 <button
                                     class="btn-download"
@@ -262,7 +273,7 @@
                             />
                         </div>
                         <div class="meta">
-                            <div class="title">Random Twitter moment 2</div>
+                            <div class="title">Random ToG Twitter moment 2</div>
                             <div class="controls">
                                 <button
                                     class="btn-download"
@@ -335,6 +346,7 @@
                     </article>
 
                     <!-- card 6 -->
+<<<<<<< HEAD
                         <div class="meta">
                             <div class="title">Random Pinterest moments</div>
                             <div class="controls">
@@ -365,6 +377,150 @@
                                 </div>
                             </div>
                         </article>
+=======
+                    <article class="card" onclick="toggleCard(this)">
+                        <div class="image">
+                            <img src="wallhaven-3l5m1d.png" alt="spidy" />
+                        </div>
+                        <div class="meta">
+                            <div class="title">Spidy</div>
+                            <div class="controls">
+                                <button
+                                    class="btn-download"
+                                    onclick="downloadImage(event, 'wallhaven-3l5m1d.png')"
+                                >
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- card 8 -->
+                    <article class="card" onclick="toggleCard(this)">
+                        <div class="image">
+                            <img
+                                src="wallhaven-13mk9v.jpg"
+                                alt="Wallhaven moments"
+                            />
+                        </div>
+                        <div class="meta">
+                            <div class="title">WallHaven Moments</div>
+                            <div class="controls">
+                                <button
+                                    class="btn-download"
+                                    onclick="downloadImage(event, 'wallhaven-13mk9v.jpg')"
+                                >
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- card 9 -->
+                    <article class="card" onclick="toggleCard(this)">
+                        <div class="image">
+                            <img
+                                src="wallhaven-218q39.jpg"
+                                alt="Wallhaven moments 2"
+                            />
+                        </div>
+                        <div class="meta">
+                            <div class="title">WallHaven for wide monitor</div>
+                            <div class="controls">
+                                <button
+                                    class="btn-download"
+                                    onclick="downloadImage(event, 'wallhaven-218q39.jpg')"
+                                >
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- card 10 -->
+                    <article class="card" onclick="toggleCard(this)">
+                        <div class="image">
+                            <img
+                                src="wallhaven-281d5y.png"
+                                alt="Wallhaven moments 3"
+                            />
+                        </div>
+                        <div class="meta">
+                            <div class="title">WeNeedLotsOFWebLikeWallHav</div>
+                            <div class="controls">
+                                <button
+                                    class="btn-download"
+                                    onclick="downloadImage(event, 'wallhaven-281d5y.jpg')"
+                                >
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- card 11 -->
+                    <article class="card" onclick="toggleCard(this)">
+                        <div class="image">
+                            <img
+                                src="wallhaven-5we787.jpg"
+                                alt="Wallhaven moments 4"
+                            />
+                        </div>
+                        <div class="meta">
+                            <div class="title">Wallhaven is best-</div>
+                            <div class="controls">
+                                <button
+                                    class="btn-download"
+                                    onclick="downloadImage(event, 'wallhaven-5we787.jpg')"
+                                >
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- card 12 -->
+                    <article class="card" onclick="toggleCard(this)">
+                        <div class="image">
+                            <img
+                                src="wallhaven-l3zmwy.jpg"
+                                alt="My fav wallpaper moment 2"
+                            />
+                        </div>
+                        <div class="meta">
+                            <div class="title">My fav wallpaper moment 2</div>
+                            <div class="controls">
+                                <button
+                                    class="btn-download"
+                                    onclick="downloadImage(event, 'wallhaven-l3zmwy.jpg')"
+                                >
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- card 13 -->
+                    <article class="card" onclick="toggleCard(this)">
+                        <div class="image">
+                            <img
+                                src="wallhaven-o36l99.jpg"
+                                alt="Wallhaven moments"
+                            />
+                        </div>
+                        <div class="meta">
+                            <div class="title">-change my mind</div>
+                            <div class="controls">
+                                <button
+                                    class="btn-download"
+                                    onclick="downloadImage(event, 'wallhaven-o36l99.jpg')"
+                                >
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+>>>>>>> d3d78d6 (Updating web-trial(pls dont poke wound))
                 </section>
             </div>
         </main>
@@ -384,7 +540,7 @@
                 a.download = filename;
                 document.body.appendChild(a);
                 a.click();
-                a.remove();
+                document.body.removeChild(a);
             }
         </script>
     </body>

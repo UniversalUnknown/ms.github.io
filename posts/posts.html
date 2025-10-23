@@ -1,134 +1,215 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Learning Archive</title>
-        <style>
-            :root {
-                --primary-color: #2c3e50;
-                --accent-color: #3498db;
-                --bg-color: #ffffff;
-            }
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learning Archive</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #ffffff;
+        }
 
-            body {
-                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-                background-color: var(--bg-color);
-                margin: 0;
-                padding: 0;
-                color: #333;
-            }
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
 
-            header {
-                background-color: transparent;
-                color: #2c3e50;
-                padding: 30px 0 10px;
-                text-align: center;
-                border-bottom: 1px solid #ddd;
-            }
-            header h1 {
-                font-size: 1.8em;
-                font-weight: 500;
-                margin: 0;
-            }
+        header {
+            background-color: transparent;
+            color: var(--primary-color);
+            padding: 30px 0 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
 
-            header p {
-                font-size: 1em;
-                color: #555;
-                margin-top: 5px;
-            }
+        header h1 {
+            font-size: 1.8em;
+            font-weight: 500;
+            margin: 0;
+        }
 
-            nav {
-                display: flex;
-                justify-content: center;
-                gap: 20px;
-                padding: 10px;
-                border-bottom: 1px solid #ddd;
-            }
+        header p {
+            font-size: 1em;
+            color: #555;
+            margin-top: 5px;
+        }
 
-            nav a {
-                text-decoration: none;
-                color: var(--accent-color);
-                font-weight: 500;
-            }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
 
-            nav a:hover {
-                text-decoration: underline;
-            }
+        nav a {
+            text-decoration: none;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
 
-            .container {
-                max-width: 800px;
-                margin: 30px auto;
-                padding: 0 15px;
-            }
+        nav a:hover {
+            text-decoration: underline;
+        }
 
-            .content {
-                display: none;
-                padding: 10px 0;
-            }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
 
-            .content img {
-                max-width: 100%;
-                margin-top: 10px;
-            }
+        .content {
+            display: none;
+            padding: 10px 0;
+            animation: fadeIn 0.5s ease-in-out;
+        }
 
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(10px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
+        .content img {
+            max-width: 100%;
+            margin-top: 10px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
             }
-        </style>
-        <script>
-            function toggleContent(id) {
-                const sections = document.querySelectorAll(".content");
-                sections.forEach((section) => {
-                    section.style.display = "none";
-                });
-                const selected = document.getElementById(id);
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <script>
+        function toggleContent(id) {
+            const sections = document.querySelectorAll(".content");
+            sections.forEach(section => section.style.display = "none");
+
+            const selected = document.getElementById(id);
+            if (selected) {
                 selected.style.display = "block";
                 selected.scrollIntoView({ behavior: "smooth" });
             }
-        </script>
-    </head>
-    <body>
-        <header>
-            <h1>My Learning Archive</h1>
-            <p>Explore key concepts in electronics with visual summaries</p>
-        </header>
+        }
 
-        <nav>
-            <a href="javascript:void(0);" onclick="toggleContent('bjt')"
-                >BJT Analysis</a
-            >
-            <a href="javascript:void(0);" onclick="toggleContent('mosfet')"
-                >MOSFET Model</a
-            >
-        </nav>
+        // Optional: Dynamically add nav items if needed
+        function addNavItem(label, id) {
+            const nav = document.getElementById("section-nav");
+            const link = document.createElement("a");
+            link.href = "javascript:void(0);";
+            link.textContent = label;
+            link.onclick = () => toggleContent(id);
+            nav.appendChild(link);
+        }
+    </script>
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <a class="nav-btn" href="../index.html" title="Home">Home</a>
+        <a class="nav-btn" href="../themes/theme.html" title="My Personal Wallpaper">Themes</a>
+    </nav>
+
+    <header>
+        <h1>My Learning Archive</h1>
+        <p>Explore key concepts in electronics with visual summaries</p>
+    </header>
+
+    <nav id="section-nav">
+        <a href="javascript:void(0);" onclick="toggleContent('bjt')">BJT Analysis</a>
+        <a href="javascript:void(0);" onclick="toggleContent('mosfet')">MOSFET Model</a>
+        <a href="javascript:void(0);" onclick="toggleContent('cs')">Control System Basics</a>
+    </nav>
+    <br>
+    <div style="text-align: center;">
+        <p><strong>Under Constructon, it is for my future understanding and one of my friend like to learn Control System</strong></p>
+    </div>
 
         <div class="container">
             <div id="bjt" class="content">
                 <h2>Small Signal Analysis of BJT</h2>
                 <p>
-                    This section summarizes the small signal analysis of a
-                    Bipolar Junction Transistor (BJT), including key concepts
-                    and equations.
+                    This section might summarizes the small signal analysis of a
+                    Bipolar Junction Transistor (BJT) with H-parameter model,
+                    <a
+                        href="https://www.amazon.com/ELECTRONIC-DEVICES-CIRCUITS-Salivahanan-Suresh/dp/9355322062"
+                        >Check this book</a>
+                    for more knowledge
+                    and equations. <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                        This is the circuit diagram of Common Collector:
+                    <img src="BjtCC.png" alt="Small Signal Analysis of BJT" /> <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                        This is the circuit diagram of Common Emmiter:
+                    <img src="BjtCE.png" alt="Small Signal Analysis of BJT" /> <br>
+                        So the H-Parameter model and its <strong>Gain</strong> and <strong>Impedence</strong> are : <br>
+                        Current Gain \(A_i\) = - \(\frac{I_c}{I_b}\) <br>
+                        Voltage Gain \(A_v\) = - \(\frac{A_i * R_l}{Z_i}\) <br>
+                        Input Impedence \(Z_i\) = \(H_ie\) - \(\frac{H_re*H_fe*R_l}{1+H_oe*R_l}\) <br>
+                        Output Impedence \(Z_o\) = \(R_l\) <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        This is the circuit diagram of Common Base:
+                    <img src="BjtCB.png" alt="Small Signal Analysis of BJT" /> <br>
+
+
                 </p>
-                <img src="ss.png" alt="Small Signal Analysis of BJT" />
+
             </div>
 
             <div id="mosfet" class="content">
                 <h2>Characteristic Model of MOSFET</h2>
                 <p>
-                    This section covers the characteristic model of a
-                    Metal-Oxide-Semiconductor Field-Effect Transistor (MOSFET),
-                    detailing its operation and characteristics.
+                    Characteristic model of Metal-Oxide-Semiconductor Field-Effect Transistor (MOSFET),
+                    \[
+                    h_{ib} = \frac{\partial V_{EB}}{\partial I_E}
+                    \]
                 </p>
-                <img src="mosfet.png" alt="Characteristic Model of MOSFET" />
+                <a href="https://instrumentationtools.com/igbt/" target="_blank">
+                  <img src="mosfet.png" alt="Characteristic Model of MOSFET" />
+                </a>
+
+            </div>
+
+                <div class="container">
+                    <div id="cs" class="content">
+                        <h2>Basics of Control System</h2>
+                        <p>
+                            Lets consider a example :
+                            <br>
+                            <img src="cs1.png" alt="" /> <br>
+                            Here we know a mechanical system that is <strong>damped</strong> (bx) and <strong>Spring</strong> (k) with <strong>distance</strong> or <strong>displacement</strong> (x) with <strong>Force</strong> (F). <br>
+                            The modeling equation of this system is <br>
+                                \[
+                                M \frac{d^2x}{dt^2} + b \frac{dx}{dt} + kx = F
+                                \] <br>
+                            Taking the Laplace transform
+                                \[
+                                Ms^2X(s) + bsX(s) + kX(s) = F(s)
+                                \] <br>
+                            Now the transfer function between the displacement \(X(s)\) and the input \(F(s)\): <br>
+                                    \[
+                                    \frac{X(s)}{F(s)} = \frac{1}{Ms^2 + bs + k}
+                                    \]
+                        </p>
+                    </div>
+
+
+
+                </p>
             </div>
         </div>
     </body>
