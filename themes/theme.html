@@ -24,7 +24,7 @@
                 --glow: rgba(213, 197, 255, 0.35);
             }
 
-            /* make the decorative background cover the entire viewport including the navbar */
+            
             html,
             body {
                 height: 100%;
@@ -42,11 +42,11 @@
                 -moz-osx-font-smoothing: grayscale;
             }
 
-            /* Navbar sits on top of the background */
+
             .navbar {
                 position: sticky;
                 top: 0;
-                z-index: 15; /* higher than background and content */
+                z-index: 15; 
                 display: flex;
                 justify-content: center;
                 gap: 14px;
@@ -54,7 +54,7 @@
                 padding: 12px 16px;
                 background: var(
                     --nav-bg
-                ); /* solid-ish white to hide background lines behind it */
+                ); 
                 backdrop-filter: blur(6px);
                 box-shadow: 0 2px 8px var(--card-elev);
             }
@@ -85,9 +85,9 @@
 
             .theme-container {
                 position: relative;
-                z-index: 1; /* content above the decorative background */
+                z-index: 1; 
                 min-height: 100vh;
-                padding-top: 18px; /* space so navbar overlap looks natural */
+                padding-top: 18px; 
             }
 
             .content {
@@ -109,7 +109,7 @@
                 gap: 26px;
             }
 
-            /* Card styling: fully opaque background so background grid doesn't show through */
+            /* opaque background so background grid doesn't show through */
             .card {
                 background: var(--card-bg);
                 border-radius: 14px;
@@ -129,7 +129,7 @@
                 box-shadow: 0 16px 40px rgba(16, 24, 40, 0.08);
             }
 
-            /* ensure the image area is opaque and acts like a card image */
+            /*image area is opaque and like a card image */
             .card .image {
                 background: linear-gradient(180deg, #f8fafc, #ffffff);
                 width: 100%;
@@ -191,7 +191,7 @@
                 transform: translateY(-1px);
             }
 
-            /* Floating chat widget */
+            /* Floating chat */
             .chat-widget {
                 position: fixed;
                 right: 20px;
@@ -221,16 +221,12 @@
         </style>
     </head>
     <body>
-        <!-- decorative background must be fixed and behind everything -->
+        
         <div class="background-layer" aria-hidden="true"></div>
 
         <nav class="navbar" role="navigation" aria-label="Main navigation">
             <a class="nav-btn" href="../index.html" title="Home">Home</a>
-            <a
-                class="nav-btn"
-                href="../posts/posts.html"
-                title="My Engineering Posts">Post</a
-            >
+            <a class="nav-btn" href="../posts/posts.html" title="My Engineering Posts">Post</a>
         </nav>
 
         <main class="theme-container" role="main">
@@ -372,24 +368,6 @@
                             </div>
                         </article>
 
-                    
-                    <article class="card" onclick="toggleCard(this)">
-                        <div class="image">
-                            <img src="wallhaven-3l5m1d.png" alt="spidy" />
-                        </div>
-                        <div class="meta">
-                            <div class="title">Spidy</div>
-                            <div class="controls">
-                                <button
-                                    class="btn-download"
-                                    onclick="downloadImage(event, 'wallhaven-3l5m1d.png')"
-                                >
-                                    Download
-                                </button>
-                            </div>
-                        </div>
-                    </article>
-
                     <!-- card 8 -->
                     <article class="card" onclick="toggleCard(this)">
                         <div class="image">
@@ -515,7 +493,6 @@
                             </div>
                         </div>
                     </article>
->>>>>>> d3d78d6 (Updating web-trial(pls dont poke wound))
                 </section>
             </div>
         </main>
